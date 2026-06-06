@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Cache
+.cache/
+*.cache
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Output files
+*.json
+*.csv
+!data/skill_aliases.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo

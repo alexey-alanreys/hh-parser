@@ -1,0 +1,95 @@
+{
+  "_comment": "Нормализация навыков: ключ → канонический вид. Регистр не важен — сравнение идёт в lowercase.",
+
+  "react.js": "React",
+  "reactjs": "React",
+  "react js": "React",
+
+  "vue.js": "Vue.js",
+  "vuejs": "Vue.js",
+  "vue js": "Vue.js",
+  "vue": "Vue.js",
+
+  "node.js": "Node.js",
+  "nodejs": "Node.js",
+  "node js": "Node.js",
+
+  "next.js": "Next.js",
+  "nextjs": "Next.js",
+  "next js": "Next.js",
+
+  "nuxt.js": "Nuxt.js",
+  "nuxtjs": "Nuxt.js",
+
+  "javascript": "JavaScript",
+  "java script": "JavaScript",
+  "js": "JavaScript",
+  "es6": "JavaScript",
+  "es2015": "JavaScript",
+
+  "typescript": "TypeScript",
+  "ts": "TypeScript",
+
+  "angular": "Angular",
+  "angularjs": "Angular",
+  "angular.js": "Angular",
+  "angular js": "Angular",
+
+  "html": "HTML5",
+  "html5": "HTML5",
+
+  "css": "CSS3",
+  "css3": "CSS3",
+  "css 3": "CSS3",
+
+  "sass": "SASS/SCSS",
+  "scss": "SASS/SCSS",
+  "sass/scss": "SASS/SCSS",
+  "saas": "SASS/SCSS",
+
+  "git": "Git",
+  "github": "GitHub",
+  "gitlab": "GitLab",
+
+  "rest api": "REST API",
+  "rest": "REST API",
+  "restful": "REST API",
+  "restful api": "REST API",
+
+  "graphql": "GraphQL",
+  "graph ql": "GraphQL",
+
+  "redux": "Redux",
+  "redux toolkit": "Redux Toolkit",
+  "rtk": "Redux Toolkit",
+  "rtk query": "RTK Query",
+
+  "react native": "React Native",
+
+  "webpack": "Webpack",
+  "vite": "Vite",
+  "rollup": "Rollup",
+
+  "jest": "Jest",
+  "testing library": "Testing Library",
+  "react testing library": "Testing Library",
+
+  "docker": "Docker",
+  "kubernetes": "Kubernetes",
+  "k8s": "Kubernetes",
+
+  "figma": "Figma",
+  "storybook": "Storybook",
+
+  "mobx": "MobX",
+  "mobx-state-tree": "MobX",
+
+  "rxjs": "RxJS",
+  "rx.js": "RxJS",
+
+  "веб-программирование": "_ignore",
+  "web разработка": "_ignore",
+  "frontend": "_ignore",
+  "front-end": "_ignore",
+  "front end": "_ignore"
+}
