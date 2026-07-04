@@ -27,32 +27,25 @@ export function exportJson(result: AnalysisResult): void {
   );
 }
 
-function toCsv(
-  rows: CountItem[],
-  hot: Set<string>,
-  header: [string, string, string],
-): string {
+function toCsv(rows: CountItem[], header: [string, string]): string {
   const lines = [header.join(',')];
   for (const { label, count } of rows) {
     const escaped = label.includes(',')
       ? `"${label.replace(/"/g, '""')}"`
       : label;
-    lines.push(`${escaped},${count},${hot.has(label)}`);
+    lines.push(`${escaped},${count}`);
   }
   return lines.join('\n');
 }
 
 export function exportCsv(result: AnalysisResult): void {
-  const hotSkills = new Set(result.hot_skills.map((s) => s.label));
-  const hotKeywords = new Set(result.hot_keywords.map((k) => k.label));
-
   downloadBlob(
-    toCsv(result.all_skills, hotSkills, ['skill', 'count', 'hot']),
+    toCsv(result.hot_skills, ['skill', 'count']),
     `hhparser_${slug(result.query)}_skills.csv`,
     'text/csv',
   );
   downloadBlob(
-    toCsv(result.all_keywords, hotKeywords, ['word', 'count', 'hot']),
+    toCsv(result.hot_keywords, ['word', 'count']),
     `hhparser_${slug(result.query)}_keywords.csv`,
     'text/csv',
   );

@@ -20,9 +20,9 @@ export default function SearchForm({
   disabled,
   onSubmit,
 }: Props): React.JSX.Element {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('QA Automation Python');
   const [experience, setExperience] = useState<Experience | ''>('');
-  const [maxVacancies, setMaxVacancies] = useState(100);
+  const [maxVacancies, setMaxVacancies] = useState(50);
   const [touched, setTouched] = useState(false);
 
   const queryTooShort = query.trim().length < 2;

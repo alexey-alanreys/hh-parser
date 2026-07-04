@@ -61,6 +61,7 @@ export default function App(): React.JSX.Element {
   return (
     <div className='app-shell'>
       <header className='app-header'>
+        <span className='eyebrow'>hh.ru · сканер вакансий</span>
         <h1 className='brand'>hhParser</h1>
         <p className='tagline'>
           Что чаще всего просят в вакансиях hh.ru — без ручного чтения сотни

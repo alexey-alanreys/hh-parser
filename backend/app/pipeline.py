@@ -3,18 +3,22 @@
 from __future__ import annotations
 
 import logging
+import math
 from typing import Callable
 
 from app.config import (
     AREA_RUSSIA,
     CACHE_DIR,
-    KEYWORD_THRESHOLD,
+    KEYWORD_THRESHOLD_RATIO,
     LEMMATIZE,
+    MIN_THRESHOLD_COUNT,
     MIN_WORD_LENGTH,
     REQUEST_DELAY,
     SEARCH_PER_PAGE,
     SEARCH_URL,
-    SKILL_THRESHOLD,
+    SKILL_THRESHOLD_RATIO,
+    TOP_N_KEYWORDS,
+    TOP_N_SKILLS,
     USE_BIGRAMS,
 )
 from app.core import Analyzer, Fetcher, Parser, load_skill_aliases, load_stopwords
@@ -118,11 +122,15 @@ def run_pipeline(request: ScanRequest, on_progress: ProgressCallback) -> Analysi
     keyword_counter = analyzer.count_keywords(vacancies)
     skill_counter = analyzer.count_skills(vacancies)
 
-    all_keywords = keyword_counter.most_common()
-    all_skills = skill_counter.most_common()
+    keyword_counts = keyword_counter.most_common()
+    skill_counts = skill_counter.most_common()
 
-    hot_keywords = [(w, c) for w, c in all_keywords if c >= KEYWORD_THRESHOLD]
-    hot_skills = [(s, c) for s, c in all_skills if c >= SKILL_THRESHOLD]
+    total = len(vacancies)
+    skill_threshold = max(MIN_THRESHOLD_COUNT, math.ceil(total * SKILL_THRESHOLD_RATIO))
+    keyword_threshold = max(MIN_THRESHOLD_COUNT, math.ceil(total * KEYWORD_THRESHOLD_RATIO))
+
+    hot_keywords = [(w, c) for w, c in keyword_counts if c >= keyword_threshold][:TOP_N_KEYWORDS]
+    hot_skills = [(s, c) for s, c in skill_counts if c >= skill_threshold][:TOP_N_SKILLS]
     on_progress(JobStage.ANALYZING, 1, 1)
 
     return AnalysisResult(
@@ -130,6 +138,4 @@ def run_pipeline(request: ScanRequest, on_progress: ProgressCallback) -> Analysi
         total_vacancies=len(vacancies),
         hot_keywords=hot_keywords,
         hot_skills=hot_skills,
-        all_keywords=all_keywords,
-        all_skills=all_skills,
     )

@@ -1,9 +1,11 @@
+# syntax=docker/dockerfile:1
+
 # --- Stage 1: build frontend ---
 FROM node:20-slim AS frontend-build
 
 WORKDIR /frontend
-COPY frontend/package.json ./
-RUN npm install
+COPY frontend/package.json frontend/package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
 COPY frontend/ ./
 RUN npm run build
 
@@ -17,7 +19,7 @@ RUN apt-get update \
 # Backend
 WORKDIR /backend
 COPY backend/requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
 COPY backend/app ./app
 
 # Frontend static

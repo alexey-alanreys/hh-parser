@@ -17,8 +17,6 @@ export interface AnalysisResult {
   total_vacancies: number;
   hot_skills: CountItem[];
   hot_keywords: CountItem[];
-  all_skills: CountItem[];
-  all_keywords: CountItem[];
 }
 
 export type JobStatus = 'pending' | 'running' | 'done' | 'error';

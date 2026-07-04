@@ -18,5 +18,3 @@ class AnalysisResult:
     total_vacancies: int
     hot_keywords: list[tuple[str, int]]
     hot_skills: list[tuple[str, int]]
-    all_keywords: list[tuple[str, int]]
-    all_skills: list[tuple[str, int]]

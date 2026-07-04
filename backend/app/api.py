@@ -27,8 +27,6 @@ def _to_result_out(result: AnalysisResult) -> AnalysisResultOut:
         total_vacancies=result.total_vacancies,
         hot_skills=[CountItem(label=s, count=c) for s, c in result.hot_skills],
         hot_keywords=[CountItem(label=w, count=c) for w, c in result.hot_keywords],
-        all_skills=[CountItem(label=s, count=c) for s, c in result.all_skills],
-        all_keywords=[CountItem(label=w, count=c) for w, c in result.all_keywords],
     )
 
 

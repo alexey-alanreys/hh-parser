@@ -10,7 +10,7 @@ from app.config import EXPERIENCE_CHOICES, MAX_VACANCIES_LIMIT
 class ScanRequest(BaseModel):
     query: str = Field(min_length=2, max_length=200)
     experience: str | None = Field(default=None)
-    max_vacancies: int = Field(default=100, ge=1, le=MAX_VACANCIES_LIMIT)
+    max_vacancies: int = Field(default=50, ge=1, le=MAX_VACANCIES_LIMIT)
 
     def validate_experience(self) -> None:
         if self.experience is not None and self.experience not in EXPERIENCE_CHOICES:
@@ -27,8 +27,6 @@ class AnalysisResultOut(BaseModel):
     total_vacancies: int
     hot_skills: list[CountItem]
     hot_keywords: list[CountItem]
-    all_skills: list[CountItem]
-    all_keywords: list[CountItem]
 
 
 class JobStatus(str, Enum):

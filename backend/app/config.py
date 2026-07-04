@@ -12,7 +12,7 @@ DATA_DIR = APP_DIR / "data"
 STOPWORDS_FILE = DATA_DIR / "stopwords.txt"
 SKILL_ALIASES_FILE = DATA_DIR / "skill_aliases.json"
 
-CACHE_DIR = Path("/tmp/hhparser-cache")  # ephemeral, not persisted across restarts
+CACHE_DIR = APP_DIR.parent / ".cache"  # backend/.cache — gitignored, not persisted in Docker unless mounted
 
 SEARCH_URL = "https://hh.ru/search/vacancy"
 VACANCY_URL = "https://hh.ru/vacancy"
@@ -39,10 +39,13 @@ SELECTOR_PAGER_CURRENT = "[data-qa='pager-page'][aria-current='true']"
 SELECTOR_DESCRIPTION = "[data-qa='vacancy-description']"
 SELECTOR_SKILL = "[data-qa='skills-element']"
 
-SKILL_THRESHOLD = 5
-KEYWORD_THRESHOLD = 5
+SKILL_THRESHOLD_RATIO = 0.06  # a skill must appear in at least this share of scanned vacancies
+KEYWORD_THRESHOLD_RATIO = 0.04
+MIN_THRESHOLD_COUNT = 2  # floor, avoids single-vacancy noise on small scans
+
+TOP_N_SKILLS = 30  # matches hh.ru's own per-vacancy tag limit
+TOP_N_KEYWORDS = 50
 MIN_WORD_LENGTH = 3
-TOP_N = 30
 USE_BIGRAMS = True
 LEMMATIZE = True
 

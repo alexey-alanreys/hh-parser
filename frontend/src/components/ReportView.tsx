@@ -43,31 +43,6 @@ export default function ReportView({ result }: Props): React.JSX.Element {
           title='🔑 Горячие ключевые слова'
         />
       </div>
-
-      <details className='full-lists'>
-        <summary>
-          Полные списки (всего навыков: {result.all_skills.length}, слов:{' '}
-          {result.all_keywords.length})
-        </summary>
-        <div className='full-lists-grid'>
-          <ul className='compact-list'>
-            {result.all_skills.map((s) => (
-              <li key={s.label}>
-                <span>{s.label}</span>
-                <span className='compact-count'>{s.count}</span>
-              </li>
-            ))}
-          </ul>
-          <ul className='compact-list'>
-            {result.all_keywords.map((k) => (
-              <li key={k.label}>
-                <span>{k.label}</span>
-                <span className='compact-count'>{k.count}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </details>
     </div>
   );
 }
