@@ -1,40 +1,33 @@
-"""
-HireScope — HTTP-клиент с rate limiting и дисковым кешем.
-"""
+"""HTTP client with rate limiting and a disk cache."""
 
 import logging
 import re
 import time
 from pathlib import Path
-from typing import Optional
 
 import requests
 
-from config import REQUEST_HEADERS, REQUEST_TIMEOUT
+from app.config import REQUEST_HEADERS, REQUEST_TIMEOUT
 
-log = logging.getLogger("hirescope.fetcher")
+log = logging.getLogger("hhparser.fetcher")
 
 
 class Fetcher:
-    def __init__(
-        self,
-        delay: float = 1.0,
-        cache_dir: Optional[str] = None,
-    ) -> None:
+    def __init__(self, delay: float, cache_dir: Path | None) -> None:
         self.delay = delay
         self.session = requests.Session()
         self.session.headers.update(REQUEST_HEADERS)
-        self.cache_dir = Path(cache_dir) if cache_dir else None
+        self.cache_dir = cache_dir
         if self.cache_dir:
             self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-    def _cache_path(self, key: str) -> Optional[Path]:
+    def _cache_path(self, key: str) -> Path | None:
         if not self.cache_dir:
             return None
         safe = re.sub(r"[^\w]", "_", key)[:180]
         return self.cache_dir / f"{safe}.html"
 
-    def get(self, url: str, params: Optional[dict] = None) -> str:
+    def get(self, url: str, params: dict | None = None) -> str:
         cache_key = url + str(sorted(params.items()) if params else "")
         cache_path = self._cache_path(cache_key)
 

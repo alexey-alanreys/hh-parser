@@ -1,0 +1,13 @@
+services:
+  hh-parser:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8080:80"
+    # Раскомментируйте, чтобы кеш HTML-страниц пережил рестарт контейнера:
+    # volumes:
+    #   - hhparser-cache:/tmp/hhparser-cache
+
+# volumes:
+#   hhparser-cache:

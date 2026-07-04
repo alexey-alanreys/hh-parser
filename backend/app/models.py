@@ -1,6 +1,4 @@
-"""
-HireScope — модели данных.
-"""
+"""Internal pipeline dataclasses (see schemas.py for the HTTP API models)."""
 
 from dataclasses import dataclass, field
 

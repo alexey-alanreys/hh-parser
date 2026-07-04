@@ -1,0 +1,50 @@
+:root {
+  --bg: #edeeea;
+  --surface: #ffffff;
+  --ink: #1a1d1b;
+  --ink-muted: #5b6058;
+  --line: #d8dad3;
+  --accent: #e0932e;
+  --accent-ink: #7a4a0f;
+  --danger: #b3402a;
+
+  --font-ui:
+    system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

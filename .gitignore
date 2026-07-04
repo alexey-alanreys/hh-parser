@@ -1,35 +1,18 @@
 # Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.Python
-
-# Virtual environment
-venv/
+.pytest_cache/
 .venv/
-env/
+venv/
+
+# Node / frontend
+node_modules/
+frontend/dist/
 
 # Cache
 .cache/
-*.cache
 
-# Test artifacts
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Output files
-*.json
-*.csv
-!data/skill_aliases.json
-
-# OS
+# OS / IDE
 .DS_Store
-Thumbs.db
-
-# IDE
-.idea/
 .vscode/
-*.swp
-*.swo
+.idea/

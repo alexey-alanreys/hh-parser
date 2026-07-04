@@ -1,32 +1,26 @@
-"""
-HireScope — парсер HTML страниц hh.ru.
-Использует только data-qa селекторы — они стабильны при редизайне вёрстки.
-"""
+"""hh.ru HTML parser. Uses data-qa selectors, which are stable across redesigns."""
 
 import logging
 import re
 
 from bs4 import BeautifulSoup
 
-from config import (
+from app.config import (
     SELECTOR_DESCRIPTION,
-    SELECTOR_PAGER_NEXT,
+    SELECTOR_PAGER_PAGE,
+    SELECTOR_PAGER_CURRENT,
     SELECTOR_SKILL,
     SELECTOR_VACANCY_TITLE_LINK,
     SELECTOR_VACANCY_TITLE_TEXT,
     VACANCY_URL,
 )
 
-log = logging.getLogger("hirescope.parser")
+log = logging.getLogger("hhparser.parser")
 
 
 class Parser:
     @staticmethod
     def parse_search_page(html: str) -> list[dict[str, str]]:
-        """
-        Извлекает список вакансий со страницы поиска.
-        Возвращает: [{"id": "...", "title": "...", "url": "..."}, ...]
-        """
         soup = BeautifulSoup(html, "lxml")
         results: list[dict[str, str]] = []
         seen_ids: set[str] = set()
@@ -55,10 +49,6 @@ class Parser:
 
     @staticmethod
     def parse_vacancy_page(html: str) -> tuple[str, list[str]]:
-        """
-        Извлекает текст описания и список навыков со страницы вакансии.
-        Возвращает: (description_text, skills)
-        """
         soup = BeautifulSoup(html, "lxml")
 
         desc_block = soup.select_one(SELECTOR_DESCRIPTION)
@@ -77,4 +67,10 @@ class Parser:
     @staticmethod
     def has_next_page(html: str) -> bool:
         soup = BeautifulSoup(html, "lxml")
-        return bool(soup.select_one(SELECTOR_PAGER_NEXT))
+        pages = soup.select(SELECTOR_PAGER_PAGE)
+        if not pages:
+            return False
+        current = soup.select_one(SELECTOR_PAGER_CURRENT)
+        if not current:
+            return False
+        return pages[-1] != current
