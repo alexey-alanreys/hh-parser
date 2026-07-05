@@ -27,7 +27,7 @@ export default function ScanProgress({
       className='progress-panel'
       role='status'
     >
-      <div className='progress-query'>Обрабатывается: «{query}»</div>
+      <div className='progress-query'>Обрабатывается: {query}</div>
       <div className='progress-label'>
         <span>{STAGE_LABELS[stage]}</span>
         {total > 0 && (
