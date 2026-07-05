@@ -18,9 +18,9 @@ RUN apt-get update \
 
 # Backend
 WORKDIR /backend
-COPY backend/requirements.txt ./
-RUN --mount=type=cache,target=/root/.cache/pip pip install -r requirements.txt
+COPY backend/pyproject.toml ./
 COPY backend/app ./app
+RUN --mount=type=cache,target=/root/.cache/pip pip install .
 
 # Frontend static
 COPY --from=frontend-build /frontend/dist /usr/share/nginx/html

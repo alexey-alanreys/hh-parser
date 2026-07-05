@@ -1,0 +1,25 @@
+[project]
+name = "hh-parser-backend"
+version = "1.0.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "pydantic==2.10.4",
+    "requests==2.32.3",
+    "beautifulsoup4==4.12.3",
+    "lxml==5.3.0",
+    "pymorphy3==2.0.6",
+    "pymorphy3-dicts-ru==2.4.417150.4580142",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+# Required for correctness, not dev tooling: app/data/*.txt and *.json are
+# read at runtime relative to the installed package path (see app/config.py).
+# Without this, setuptools silently drops non-.py files from the wheel and
+# stopwords/skill_aliases loading fails open (empty sets, warning only).
+[tool.setuptools.package-data]
+app = ["data/*.txt", "data/*.json"]

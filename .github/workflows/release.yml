@@ -1,0 +1,21 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # GitHub attaches a source zip/tarball to every release automatically —
+      # no separate artifact build/upload needed for a source-only release.
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

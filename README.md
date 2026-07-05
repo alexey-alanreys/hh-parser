@@ -26,21 +26,12 @@
 
 ## 2. Что нужно перед началом работы
 
-Два независимых способа запуска — выберите один.
-
-### Вариант A: Docker (рекомендуется)
-
-Один контейнер, ничего вручную не настраивается.
+Единственная зависимость — **Docker Desktop**, запущенный перед стартом проекта:
 
 - [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
 - [https://docs.docker.com/desktop/](https://docs.docker.com/desktop/)
 
-Docker Desktop должен быть **запущен** перед стартом проекта.
-
-### Вариант B: локально, без Docker
-
-- Python 3.12+
-- Node.js 20+
+Python и Node.js устанавливать не нужно — всё собирается внутри контейнера.
 
 ---
 
@@ -69,21 +60,21 @@ cd hh-parser
 
 ---
 
-## 5. Запуск через Docker
+## 5. Запуск
 
 1. Откройте терминал в корне проекта.
 2. Выполните:
 
-```bash
-docker compose up --build
-```
+   ```bash
+   docker compose up --build
+   ```
 
 3. Дождитесь сборки и запуска контейнера (несколько минут при первом запуске).
 4. Откройте в браузере:
 
-```
-http://localhost:8080
-```
+   ```
+   http://localhost:8080
+   ```
 
 ### Как понять, что всё работает
 
@@ -101,43 +92,29 @@ http://localhost:8080
 
 ---
 
-## 6. Запуск без Docker (backend + frontend раздельно)
+## 6. Повседневная работа с Docker
 
-Два процесса, два терминала.
+Полезные команды для типичных ситуаций:
 
-### Backend
+| Задача | Команда |
+|---|---|
+| Запуск в фоне (не занимает терминал) | `docker compose up -d` |
+| Просмотр логов | `docker compose logs -f` |
+| Проверить, что контейнер жив | `docker ps` |
+| Остановить | `docker compose down` |
+| Остановить и удалить volume с кешем | `docker compose down -v` |
+| Пересобрать после изменения кода | `docker compose up --build -d` |
+| Пересобрать полностью, игнорируя кеш слоёв | `docker compose build --no-cache && docker compose up -d` |
+| Зайти внутрь контейнера (диагностика) | `docker compose exec hh-parser sh` |
+| Освободить место (старые образы/слои) | `docker image prune -f` |
 
-```bash
-cd backend
-python -m venv .venv
-.venv\Scripts\activate        # Linux/macOS: source .venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --reload --port 8000
-```
-
-### Frontend (отдельный терминал)
-
-```bash
-cd frontend
-npm ci
-npm run dev
-```
-
-Откройте `http://localhost:5173`. Vite проксирует запросы `/api` на
-`localhost:8000` — CORS в `backend/app/main.py` уже настроен именно на
-этот порт, менять ничего не нужно.
-
-**Отличие от Docker-запуска:** nginx здесь не используется, оба процесса
-работают напрямую. Кеш HTML-страниц пишется в `backend/.cache` — та же
-папка, что и в контейнере, но без изоляции.
+Правило: если изменился только код — достаточно `up --build`. Если менялись
+зависимости (`pyproject.toml`, `package.json`) и сборка выглядит "залипшей"
+на старой версии — используйте `--no-cache`.
 
 ---
 
 ## 7. Обновление до новой версии
-
-Актуально только для Docker-запуска — при локальном запуске из git
-достаточно `git pull` и переустановки зависимостей при изменении
-`requirements.txt`/`package.json`.
 
 ### Если проект получен через git
 
@@ -172,13 +149,9 @@ docker compose up -d
 
 ## 8. Как остановить программу
 
-Docker:
-
 ```bash
 docker compose down
 ```
-
-Локально: `Ctrl+C` в обоих терминалах.
 
 ---
 
@@ -192,4 +165,4 @@ docker compose down
   и не переживает пересборку/перезапуск образа — рассчитан на это, отдельная
   настройка не предусмотрена.
 - Изменение файлов `backend/app/data/stopwords.txt` и `skill_aliases.json`
-  требует пересборки образа (Docker) или перезапуска backend (локально).
+  требует пересборки образа.
