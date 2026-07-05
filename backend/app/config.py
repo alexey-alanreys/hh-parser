@@ -13,6 +13,7 @@ STOPWORDS_FILE = DATA_DIR / "stopwords.txt"
 SKILL_ALIASES_FILE = DATA_DIR / "skill_aliases.json"
 
 CACHE_DIR = APP_DIR.parent / ".cache"  # backend/.cache — gitignored, not persisted in Docker unless mounted
+CACHE_TTL_HOURS = 24  # stale entries are skipped on read and swept on process start
 
 SEARCH_URL = "https://hh.ru/search/vacancy"
 VACANCY_URL = "https://hh.ru/vacancy"

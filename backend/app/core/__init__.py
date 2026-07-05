@@ -1,5 +1,5 @@
 from app.core.analyzer import Analyzer, load_skill_aliases, load_stopwords
-from app.core.fetcher import Fetcher
+from app.core.fetcher import Fetcher, sweep_stale_cache
 from app.core.parser import Parser
 
 __all__ = [
@@ -8,4 +8,5 @@ __all__ = [
     "Parser",
     "load_skill_aliases",
     "load_stopwords",
+    "sweep_stale_cache",
 ]

@@ -5,7 +5,6 @@ import logging
 import re
 import unicodedata
 from collections import Counter
-from pathlib import Path
 
 from app.config import SKILL_ALIASES_FILE, STOPWORDS_FILE
 from app.models import Vacancy

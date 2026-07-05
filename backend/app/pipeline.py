@@ -9,6 +9,7 @@ from typing import Callable
 from app.config import (
     AREA_RUSSIA,
     CACHE_DIR,
+    CACHE_TTL_HOURS,
     KEYWORD_THRESHOLD_RATIO,
     LEMMATIZE,
     MIN_THRESHOLD_COUNT,
@@ -100,7 +101,7 @@ def run_pipeline(request: ScanRequest, on_progress: ProgressCallback) -> Analysi
     stopwords = load_stopwords()
     skill_aliases = load_skill_aliases()
 
-    fetcher = Fetcher(delay=REQUEST_DELAY, cache_dir=CACHE_DIR)
+    fetcher = Fetcher(delay=REQUEST_DELAY, cache_dir=CACHE_DIR, ttl_hours=CACHE_TTL_HOURS)
     parser = Parser()
     analyzer = Analyzer(
         stopwords=stopwords,
