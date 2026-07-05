@@ -1,5 +1,15 @@
 import type { JobStatusOut, ScanRequest } from '../types';
 
+export class ApiError extends Error {
+  status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = 'ApiError';
+    this.status = status;
+  }
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const resp = await fetch(path, {
     headers: { 'Content-Type': 'application/json' },
@@ -11,7 +21,10 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
       body !== null && typeof body === 'object' && 'detail' in body
         ? body.detail
         : undefined;
-    throw new Error(typeof detail === 'string' ? detail : resp.statusText);
+    throw new ApiError(
+      resp.status,
+      typeof detail === 'string' ? detail : resp.statusText,
+    );
   }
   return resp.json() as Promise<T>;
 }
@@ -25,6 +38,10 @@ export function createScan(payload: ScanRequest): Promise<{ job_id: string }> {
 
 export function getScanStatus(jobId: string): Promise<JobStatusOut> {
   return request(`/api/scan/${jobId}`);
+}
+
+export function getLatestScan(): Promise<JobStatusOut> {
+  return request('/api/scan/latest');
 }
 
 const POLL_INTERVAL_MS = 1200;

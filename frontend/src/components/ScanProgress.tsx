@@ -7,10 +7,14 @@ const STAGE_LABELS: Record<JobStage, string> = {
 };
 
 interface Props {
+  query: string;
   progress: JobProgress | null;
 }
 
-export default function ScanProgress({ progress }: Props): React.JSX.Element {
+export default function ScanProgress({
+  query,
+  progress,
+}: Props): React.JSX.Element {
   const stage = progress?.stage ?? 'collecting';
   const current = progress?.current ?? 0;
   const total = progress?.total ?? 0;
@@ -23,6 +27,7 @@ export default function ScanProgress({ progress }: Props): React.JSX.Element {
       className='progress-panel'
       role='status'
     >
+      <div className='progress-query'>Обрабатывается: «{query}»</div>
       <div className='progress-label'>
         <span>{STAGE_LABELS[stage]}</span>
         {total > 0 && (

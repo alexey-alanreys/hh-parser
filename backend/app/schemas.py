@@ -54,6 +54,7 @@ class ScanCreatedOut(BaseModel):
 
 class JobStatusOut(BaseModel):
     job_id: str
+    query: str
     status: JobStatus
     progress: JobProgress | None = None
     result: AnalysisResultOut | None = None

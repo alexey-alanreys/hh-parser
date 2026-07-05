@@ -12,7 +12,7 @@ export default function ReportView({ result }: Props): React.JSX.Element {
     <div className='report'>
       <div className='report-header'>
         <div>
-          <h1>«{result.query}»</h1>
+          <h1>Результаты: {result.query}</h1>
           <p className='report-meta'>
             Проанализировано вакансий: {result.total_vacancies}
           </p>

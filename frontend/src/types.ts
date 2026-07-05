@@ -30,6 +30,7 @@ export interface JobProgress {
 
 export interface JobStatusOut {
   job_id: string;
+  query: string;
   status: JobStatus;
   progress: JobProgress | null;
   result: AnalysisResult | null;
