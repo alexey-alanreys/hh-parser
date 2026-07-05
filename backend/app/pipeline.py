@@ -17,7 +17,6 @@ from app.config import (
     REQUEST_DELAY,
     SEARCH_PER_PAGE,
     SEARCH_URL,
-    SKILL_THRESHOLD_RATIO,
     TOP_N_KEYWORDS,
     TOP_N_SKILLS,
     USE_BIGRAMS,
@@ -127,11 +126,10 @@ def run_pipeline(request: ScanRequest, on_progress: ProgressCallback) -> Analysi
     skill_counts = skill_counter.most_common()
 
     total = len(vacancies)
-    skill_threshold = max(MIN_THRESHOLD_COUNT, math.ceil(total * SKILL_THRESHOLD_RATIO))
     keyword_threshold = max(MIN_THRESHOLD_COUNT, math.ceil(total * KEYWORD_THRESHOLD_RATIO))
 
     hot_keywords = [(w, c) for w, c in keyword_counts if c >= keyword_threshold][:TOP_N_KEYWORDS]
-    hot_skills = [(s, c) for s, c in skill_counts if c >= skill_threshold][:TOP_N_SKILLS]
+    hot_skills = skill_counts[:TOP_N_SKILLS]  # no floor — hh.ru's tag vocabulary is small/curated, unlike keywords
     on_progress(JobStage.ANALYZING, 1, 1)
 
     return AnalysisResult(
