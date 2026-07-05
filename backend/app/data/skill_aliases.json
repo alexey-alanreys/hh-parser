@@ -155,6 +155,7 @@
 
   "английский — b1 — средний": "_ignore",
   "английский — b2 — средне-высокий": "_ignore",
+  "английский — b2 — средне-продвинутый": "_ignore",
   "английский — a1 — начальный": "_ignore",
   "английский — a2 — элементарный": "_ignore",
   "английский — c1 — продвинутый": "_ignore",
@@ -180,6 +181,7 @@
   "testng": "TestNG",
   "restassured": "RestAssured",
   "rest-assured": "RestAssured",
+  "rest assured": "RestAssured",
   "teamcity": "TeamCity",
   "ci/cd": "CI/CD",
   "ci cd": "CI/CD",

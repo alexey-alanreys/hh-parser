@@ -101,7 +101,14 @@ class Analyzer:
         return tokens
 
     def _bigrams(self, tokens: list[str]) -> list[str]:
-        return [f"{tokens[i]} {tokens[i + 1]}" for i in range(len(tokens) - 1)]
+        # Adjacent duplicate lemmas (section header repeating a word from the
+        # following text, OCR-like artifacts in hh.ru markup) produce
+        # meaningless "X X" bigrams — filter them out.
+        return [
+            f"{tokens[i]} {tokens[i + 1]}"
+            for i in range(len(tokens) - 1)
+            if tokens[i] != tokens[i + 1]
+        ]
 
     def count_keywords(self, vacancies: list[Vacancy]) -> Counter:
         counter: Counter = Counter()
